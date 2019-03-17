@@ -3097,7 +3097,6 @@ out:
 		path_put(&nd->root);
 	if (base)
 		fput(base);
-out2:
 	if (!(opened & FILE_OPENED)) {
 		BUG_ON(!error);
 		put_filp(file);
