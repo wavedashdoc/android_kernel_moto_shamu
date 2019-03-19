@@ -493,6 +493,7 @@ static ssize_t store_scaling_max_freq
         ret = cpufreq_set_policy(policy, &new_policy);
 
         return ret ? ret : count;
+}
 
 /**
  * show_cpuinfo_cur_freq - current CPU frequency as detected by hardware
