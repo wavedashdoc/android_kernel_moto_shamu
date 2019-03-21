@@ -320,7 +320,7 @@
 
 		qcom,tx-gpio = <&msmgpio 130 0>;
 		qcom,rx-gpio = <&msmgpio 131 0>;
-		qcom,inject-rx-on-wakeup = <1>;
+		qcom,inject-rx-on-wakeup;
 		qcom,rx-char-to-inject = <0x18>;
 
 		qcom,wakeup_irq = <2>;
@@ -369,6 +369,7 @@
 		qcom,msm-bus,vectors-KBps =
 				<86 512 0 0>,
 				<86 512 500 800>;
+		qcom,msm-obs;
 		status = "disabled";
 	};
 
@@ -548,8 +549,7 @@
 		interrupt-names = "hc_irq", "pwr_irq";
 
 		qcom,bus-width = <8>;
-		qcom,wakeup-on-idle;
-		qcom,cpu-dma-latency-us = <701>;
+		qcom,cpu-dma-latency-us = <200>;
 
 		qcom,msm-bus,name = "sdhc1";
 		qcom,msm-bus,num-cases = <9>;
@@ -607,7 +607,6 @@
 		interrupt-names = "hc_irq", "pwr_irq";
 
 		qcom,bus-width = <4>;
-		qcom,cpu-dma-latency-us = <701>;
 
 		qcom,msm-bus,name = "sdhc2";
 		qcom,msm-bus,num-cases = <8>;
@@ -1087,7 +1086,6 @@
 		qcom,sda-gpio = <&msmgpio 61 0>;
 		qcom,scl-gpio = <&msmgpio 62 0>;
 		qcom,master-id = <84>;
-		qcom,extended-recovery = <1>;
 	};
 
 	qcom,clock-krait@f9016000 {
@@ -4507,6 +4505,7 @@
 			interrupts = <0 131 0>, <0 179 0>;
 			interrupt-names = "irq", "otg_irq";
 			tx-fifo-resize;
+			snps,usb3-u1u2-disable;
 			usb-phy = <&hsphy0>, <&ssphy0>;
 		};
 	};
@@ -4546,7 +4545,7 @@
 	android_usb@fe8050c8 {
 		compatible = "qcom,android-usb";
 		reg = <0xfe8050c8 0xc8>;
-		qcom,android-usb-swfi-latency = <1>;
+		qqcom,pm-qos-latency = <2 1001 30001>;
 	};
 
 	hsphy0: hsphy@f92f8800 {
@@ -4919,7 +4918,7 @@
 			low-threshold-uamp = <1000000>;
 			mitigation-freq-khz = <1958400>;
 			mitigation-gpu-freq-khz = <389000>;
-			max-gpu-freq-khz = <700000>;
+			max-gpu-freq-khz = <600000>;
 			ibat-channel = <0x15>;
 			adc-interval-usec = <3900>;
 			uv-to-ua-numerator = <2>;
@@ -4973,8 +4972,6 @@
 		qcom,cx-phase-resource-key = "tmpc";
 		qcom,cx-phase-hot-crit-temp = <85>;
 		qcom,cx-phase-hot-crit-temp-hyst = <15>;
-		qcom,gfx-phase-warm-temp = <60>;
-		qcom,gfx-phase-warm-temp-hyst = <10>;
 		qcom,gfx-phase-hot-crit-temp = <85>;
 		qcom,gfx-phase-hot-crit-temp-hyst = <15>;
 		qcom,gfx-sensor-id = <4>;
@@ -5565,6 +5562,7 @@
 		reg = <0xFE0C900C  0x4>,
 		      <0xFE0C9010  0x4>;
 		reg-names = "avtimer_lsb_addr", "avtimer_msb_addr";
+		qcom,clk_div = <27>;
 	};
 };
 
