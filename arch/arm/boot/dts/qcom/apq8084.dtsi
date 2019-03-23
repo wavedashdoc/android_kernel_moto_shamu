@@ -4897,7 +4897,7 @@
 			low-threshold-uamp = <1000000>;
 			mitigation-freq-khz = <1190400>;
 			mitigation-gpu-freq-khz = <389000>;
-			max-gpu-freq-khz = <600000>;
+			max-gpu-freq-khz = <700000>;
 			ibat-channel = <0x15>;
 			adc-interval-usec = <3900>;
 			uv-to-ua-numerator = <2>;
