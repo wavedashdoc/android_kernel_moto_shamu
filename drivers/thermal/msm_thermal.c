@@ -51,7 +51,7 @@
 bool full_fm = false;
 module_param(full_fm, bool, 0644);
 
-unsigned int temp_threshold = 70;
+unsigned int temp_threshold = 55;
 module_param(temp_threshold, int, 0755);
 
 static struct msm_thermal_data msm_thermal_info;
