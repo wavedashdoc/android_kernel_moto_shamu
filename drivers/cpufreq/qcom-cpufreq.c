@@ -72,21 +72,23 @@ struct cpufreq_suspend_t {
 	int device_suspended;
 };
 
-/* Max frequency to add to the frequency_table */
-static unsigned long arg_cpu_max_freq =2803200;
+//elementalx
+static unsigned long arg_cpu_oc = 2649600;
 
-static int __init cpufreq_read_cpu_max_freq(char *cpu_max_freq)
+static int __init cpufreq_read_cpu_oc(char *cpu_oc)
 {
 	unsigned long ui_khz;
-	int ret;
-	ret = kstrtoul(cpu_max_freq, 0, &ui_khz);
-	if (ret)
-		return -EINVAL;
-	arg_cpu_max_freq = ui_khz;
-	printk("cpu_max_freq=%lu\n", arg_cpu_max_freq);
-	return ret;
+	int err;
+
+	err =  strict_strtoul(cpu_oc, 0, &ui_khz);
+	if (err)
+		arg_cpu_oc = 0;
+
+	arg_cpu_oc = ui_khz;
+	printk("elementalx: cpu_oc=%lu\n", arg_cpu_oc);
+	return 0;
 }
-__setup("cpu_max_freq=", cpufreq_read_cpu_max_freq);
+__setup("cpu_oc=", cpufreq_read_cpu_oc);
 
 static DEFINE_PER_CPU(struct cpufreq_suspend_t, cpufreq_suspend);
 
@@ -282,9 +284,6 @@ static int msm_cpufreq_init(struct cpufreq_policy *policy)
 	policy->min = CONFIG_MSM_CPU_FREQ_MIN;
 	policy->max = CONFIG_MSM_CPU_FREQ_MAX;
 #endif
-
-	policy->max = 2649600;
-	policy->min = 300000;
 
 	cur_freq = clk_get_rate(cpu_clk[policy->cpu])/1000;
 
@@ -496,11 +495,8 @@ static int cpufreq_parse_dt(struct device *dev)
 		if (i > 0 && f <= freq_table[i-1].frequency)
 			break;
 
-		/*
-		 * If current frequency being read is greater than the
-		 * max frequency allowed skip adding it to the table.
-		 */
-		if (f > arg_cpu_max_freq) {
+		//elementalx
+		if (f > arg_cpu_oc) {
 			nf = i;
 			break;
 		}
